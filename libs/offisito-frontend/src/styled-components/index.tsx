@@ -73,6 +73,13 @@ export const Btn = (props: ButtonProps) => (
     sx={{
       color: 'white',
       borderRadius: '18px',
+      backgroundColor: 'green',
+      '&:hover': {
+        backgroundColor: 'blue',
+      },
+      '&:active': {
+        backgroundColor: 'black',
+      },
       ...props.sx,
     }}
   >
