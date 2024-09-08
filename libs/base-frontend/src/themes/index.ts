@@ -10,18 +10,16 @@ export const useIsNight = () => {
     const todayat6 = new Date(Date.now()).setHours(6, 0, 0, 0);
     const todayat18 = new Date(Date.now()).setHours(18, 0, 0, 0);
     const sunTimes = await getSunTimes(await findMe());
-    return window.matchMedia
-      ? window.matchMedia('(prefers-color-scheme: dark)').matches
-      : new Date().getTime() <
-          (sunTimes?.sunrise?.getTime
-            ? sunTimes?.sunrise?.getTime()
-            : todayat6) || new Date().getHours() >= todayat18;
+    return (
+      new Date().getTime() < (sunTimes?.sunrise?.getTime ? sunTimes?.sunrise?.getTime() : todayat6) ||
+      new Date().getTime() > (sunTimes?.sunset?.getTime ? sunTimes?.sunset?.getTime() : todayat18)
+    );
   };
 
   const [isNight, setIsNight] = useState(false);
 
   useEffect(() => {
-    calculateIsNight().then((isNight) => setIsNight(!isNight));
+    calculateIsNight().then((isNight) => setIsNight(isNight));
   }, []);
 
   return isNight;
